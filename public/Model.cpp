@@ -1,9 +1,9 @@
 #include "Model.h"
 
-void Model::Draw(shader& shader)
+void Model::Draw(shader& shader,bool isshadow)
 {
     for (unsigned int i = 0; i < meshes.size(); i++)
-        meshes[i].Draw(shader);
+        meshes[i].Draw(shader,isshadow);
 }
 
 void Model::loadModel(std::string path)
@@ -76,6 +76,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
         for (unsigned int j = 0; j < face.mNumIndices; j++)
             indices.push_back(face.mIndices[j]);
     }
+    //
     if (mesh->mMaterialIndex >= 0)
     {
         aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
@@ -84,6 +85,12 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
         vector<Texture> specularMaps = loadMaterialTextures(material,aiTextureType_SPECULAR, "texture_specular");
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
     }
+    //“ı”∞Œ∆¿Ì
+    Texture shadowtexture;
+    shadowtexture.id = shadowTextureID;
+    shadowtexture.type = "shadow";
+
+    textures.push_back(shadowtexture);
     
     return Mesh(vertices, indices, textures);
 }

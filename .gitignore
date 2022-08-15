@@ -3,6 +3,7 @@
 backup/
 bin/
 bin-int/
+assets/
 
 # Files
 *.user

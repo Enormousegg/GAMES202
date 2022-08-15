@@ -39,12 +39,12 @@ void Mesh::setupMesh()
 	glBindVertexArray(0);//解绑VAO
 }
 
-void Mesh::Draw(shader shader) {
+void Mesh::Draw(shader shader, bool isshadow) {
 	unsigned int diffuseNr = 1;
 	unsigned int spectularNr = 1;
 	unsigned int normalNr = 1;
 	unsigned int heightNr = 1;
-	for (unsigned int i = 0; i < textures.size(); ++i)
+	for (unsigned int i = 0; i < textures.size()-isshadow; ++i)
 	{
 		glActiveTexture(GL_TEXTURE0 + i);
 		//获取纹理序号
@@ -58,6 +58,9 @@ void Mesh::Draw(shader shader) {
 			number = '0' + spectularNr;
 			++spectularNr;
 		}
+		else if (name == "shadow") {
+			number = "";
+		}
 		/*else if (name == "texture_normal")
 			number = std::to_string(normalNr++);
 		else if (name == "texture_height")
@@ -66,6 +69,7 @@ void Mesh::Draw(shader shader) {
 		shader.setInt(("material." + name + number).c_str(), i);
 		glBindTexture(GL_TEXTURE_2D, textures[i].id);
 	}
+
 
 	//绘制网格
 	glBindVertexArray(VAO);

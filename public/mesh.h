@@ -43,7 +43,7 @@ public:
 	{
 		setupMesh();
 	}
-	void Draw(shader shader);
+	void Draw(shader shader,bool isshadow);
 private:
 	//äÖÈ¾Êı¾İ
 	unsigned int VBO, EBO;

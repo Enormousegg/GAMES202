@@ -25,13 +25,15 @@ public:
 	std::vector<Mesh> meshes;
 	std::string directory;
 	vector<Texture> textures_loaded;
+	int shadowTextureID;
 	bool gammaCorrection;
 
-	Model(const char* path)
+	Model(const char* path,int ID)
+		:shadowTextureID(ID)
 	{
 		loadModel(path);
 	}
-	void Draw(shader& shader);
+	void Draw(shader& shader,bool isshadow);
 private:
 	void loadModel(std::string path);
 	void processNode(aiNode* node, const aiScene* scene);
